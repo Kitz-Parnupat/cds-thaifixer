@@ -1,0 +1,31 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+
+<link rel="lazy-import" href="./page/page-login/page-login.html">
+<link rel="lazy-import" href="./page/page-view404/page-view404.html">
+
+<dom-module id="my-init">
+    <template>
+        <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+            <page-login name="login"></page-login>
+            <page-view404 name="view404"></page-view404>      
+        </iron-pages>
+    </template>
+
+    <script>
+        class myInit extends Polymer.Element {
+
+            static get is() {
+                return 'my-init';
+            }
+
+            static get properties() {
+                return {
+                    page:String
+                };
+            }
+        }
+
+        window.customElements.define(myInit.is, myInit);
+    </script>
+</dom-module>

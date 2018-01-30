@@ -1,0 +1,45 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<dom-module id="my-route">
+    <template>
+        <app-location route="{{route}}" url-space-regex="^[[rootPath]]">
+        </app-location>
+
+        <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
+        </app-route>
+       
+    </template>
+
+    <script>
+        class myRoute extends Polymer.Element {
+
+            static get is() {
+                return 'my-route';
+            }
+            static get observers() {
+                return [
+                    '_routePageChanged(routeData.page)',
+                ];
+            }
+            static get properties() {
+                return {
+                    routeData: Object,
+                    subroute: String,
+                    rootPath: String,
+                    path:{
+                        type:String,
+                        value:'view1',
+                        notify: true
+                    }
+                };
+            }
+            _routePageChanged(page) {
+                this.set('path',page)
+            }
+
+        }
+
+        window.customElements.define(myRoute.is, myRoute);
+    </script>
+</dom-module>

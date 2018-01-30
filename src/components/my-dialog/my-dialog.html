@@ -1,0 +1,27 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../shared-styles.html">
+<dom-module id="my-dialog">
+    <template>
+        <style include="shared-styles">
+           
+        </style>
+    </template>
+
+    <script>
+       
+        class myDialog extends Polymer.Element {
+            
+            static get is() {
+                return 'my-dialog';
+            }
+
+            static get properties() {
+                return {
+                    
+                };
+            }
+        }
+
+        window.customElements.define(myDialog.is, myDialog);
+    </script>
+</dom-module>

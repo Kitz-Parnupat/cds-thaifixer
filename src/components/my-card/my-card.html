@@ -1,0 +1,56 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../shared-styles.html">
+<dom-module id="my-card">
+    <template>
+        <style include="shared-styles">
+        </style>
+
+        <div class="card">
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="circle"></div>
+                </div>
+                <div class="col-xs-9" style="padding-left:0rem">
+                    <div>โต๊ะ : [[label]] </div>
+                    <div>จำนวนลูกค้า : [[description]] </div>
+                </div>
+            </div>
+            <!-- <div class="card-header">
+                <div class="circle"></div>
+            </div>
+            <div class="card-content">
+                โต๊ะ 
+            </div> -->
+        </div>
+        
+
+    </template>
+
+    <script>
+     
+        class myCard extends Polymer.Element {
+           
+            static get is() {
+                return 'my-card';
+            }
+
+            static get properties() {
+                return {
+                    label:String,
+                    description:String
+                };
+            }
+
+            ready() {
+                super.ready();
+
+                Polymer.RenderStatus.afterNextRender(this, function() {
+                    
+                });
+            }
+
+        }
+
+        window.customElements.define(myCard.is, myCard);
+    </script>
+</dom-module>

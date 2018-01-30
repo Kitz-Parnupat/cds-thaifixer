@@ -1,0 +1,15 @@
+<script>
+    const commonReducer = (function(){
+        const initial = {
+            message: 'Hello world'
+        }
+        const reducer = function (state=initial, action) {
+            switch (action.type) {
+                case 'COMMON_SET_MESSAGE': 
+                    return Object.assign({},state,{message:action.payload})
+                default: return state
+            }
+        };
+        return reducer
+    })()
+</script>

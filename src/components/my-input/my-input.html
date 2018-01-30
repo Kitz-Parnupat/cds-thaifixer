@@ -1,0 +1,42 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/iron-input/iron-input.html">
+<link rel="import" href="../../shared-styles.html">
+<dom-module id="my-input">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block
+            }
+        </style>
+        <label for="input">[[label]]</label>
+        <iron-input bind-value="{{bindValue}}">
+            <input id="input" type="text" value="{{value::input}}">
+        </iron-input>
+        
+
+    </template>
+
+    <script>
+    
+        class myInput extends Polymer.Element {
+       
+            static get is() {
+                return 'my-input';
+            }
+            static get properties(){
+                return {
+                    value:{
+                        type:String,
+                        notify:true
+                    },
+                    bindValue:{
+                        type:String
+                    },
+                    label:String
+                }
+            }
+        }
+
+        window.customElements.define(myInput.is, myInput);
+    </script>
+</dom-module>

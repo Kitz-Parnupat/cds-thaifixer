@@ -1,0 +1,61 @@
+<script>
+  window.My = window.My || { $: {} }
+</script>
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="./my-route.html">
+<link rel="import" href="./my-init.html">
+<link rel="import" href="./layout/layout-main.html">
+<link rel="import" href="./my-auth.html">
+<link rel="import" href="../src/config/config-axios.html">
+<dom-module id="my-app">
+  <template>
+    <my-route path="{{page}}"></my-route>
+    <my-auth></my-auth>
+    <layout-main id="layout">
+        <my-init page="[[page]]"></my-init>
+    </layout-main>
+  </template>
+
+  <script>
+    class MyApp extends Polymer.Element {
+      static get is() { return 'my-app'; }
+
+      static get properties() {
+        return {
+          page: {
+            type: String,
+            reflectToAttribute: true,
+            observer: '_pageChanged',
+          }
+        };
+      }
+      connectedCallback() {
+        super.connectedCallback();
+        My.changePage = this.changePage;
+      }
+      changePage(path){
+        window.history.pushState({}, null, path);
+        window.dispatchEvent(new CustomEvent('location-changed'));
+      }
+      _pageChanged(page) {
+        // Load page import on demand. Show 404 page if fails
+        if(page == '') page = 'dashboard'
+        var resolvedPageUrl = this.resolveUrl('page/page-'+page+'/page-'+page+'.html');
+        Polymer.importHref(
+            resolvedPageUrl,
+            this._onLoad.bind(this),
+            this._showPage404.bind(this),
+            true);
+      }
+      _onLoad(){
+        this.$.layout.$.drawer.close()
+      }
+      _showPage404() {
+        // console.error('view404')
+        this.page = 'view404';
+      }
+    }
+
+    window.customElements.define(MyApp.is, MyApp);
+  </script>
+</dom-module>

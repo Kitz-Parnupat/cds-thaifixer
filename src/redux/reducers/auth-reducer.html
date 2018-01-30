@@ -1,0 +1,15 @@
+<script>
+    const authReducer = (function(){
+        const initial = {
+            user: {}
+        }
+        const reducer = function (state=initial, action) {
+            switch (action.type) {
+                case 'AUTH_SET_USER': 
+                    return Object.assign({},state,{user:action.payload})
+                default: return state
+            }
+        };
+        return reducer
+    })()
+</script>

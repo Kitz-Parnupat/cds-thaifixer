@@ -1,0 +1,86 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<!-- shared styles for all views -->
+<dom-module id="shared-styles">
+  <link rel="import" type="css" href="./css/flexbox-grid.css">
+  <link rel="import" type="css" href="./css/font.css">
+  <template>
+    <style>
+      :host{
+        --btn-color-default-normal:#e4eaec;
+        --btn-color-default-hover:#ccd5db;
+        --btn-color-default-active:#76838f;
+
+        --btn-color-primary-normal:#62a8ea;
+        --btn-color-primary-hover:#89bceb;
+        --btn-color-primary-active:#4e97d9;
+
+        --btn-color-success-normal:#46be8a;
+        --btn-color-success-hover:#5cd29d;
+        --btn-color-success-active:#36ab7a;
+
+        --btn-color-info-normal:#57c7d4;
+        --btn-color-info-hover:#77d6e1;
+        --btn-color-info-active:#47b8c6;
+
+        --btn-color-warning-normal:#f2a654;
+        --btn-color-warning-hover:#f4b066;
+        --btn-color-warning-active:#e79857;
+
+        --btn-color-warning-normal:#f96868;
+        --btn-color-warning-hover:#fa7a7a;
+        --btn-color-warning-active:#e9595b;
+
+        --toolbar-color-primary:#40C4FF;
+        --toolbar-color-dark:#212121;
+        --toolbar-color-light:#F5F5F5;
+        
+        --text-color-default:#2C2C2C;
+        --drawer-color-default:#757575;
+        --bg-color-white:#ffff;
+      }
+      .card {
+        box-sizing: border-box;
+        margin: 0.5rem;
+        padding: 1rem;
+        color: #757575;
+        border-radius: 5px;
+        background-color: var(--bg-color-white);
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+      }
+
+      .circle {
+        display: inline-block;
+        width: 48px;
+        height: 48px;
+        text-align: center;
+        color: #555;
+        border-radius: 50%;
+        background: #ddd;
+        font-size: 30px;
+        line-height: 64px;
+        /* margin-right: 1.5rem; */
+      }
+
+      h1 {
+        margin: 16px 0;
+        color: #212121;
+        font-size: 22px;
+      }
+
+      input,label{
+        font-family: MitrLight;
+      }
+    </style>
+  </template>
+</dom-module>

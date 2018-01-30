@@ -1,0 +1,89 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../actions/commonAction.html">
+<link rel="import" href="../../actions/authAction.html">
+<link rel="import" href="../../redux-mixin.html">
+<link rel="import" href="../../shared-styles.html">
+<link rel="import" href="../../components/my-input/my-input.html">
+<dom-module id="page-login">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block
+            }
+        </style>
+        <div class="container">
+            <my-input label="ทดสอบ" bind-value="{{value}}"></my-input>    
+            <!-- <h2>Login  [[message]]</h2>
+            <label for="email">Email</label>
+            <input type="text" id="email" value="test@hotmail.com">
+            <label for="password">Password</label>
+            <input type="password" id="password" value="Password">
+            <button on-click="login">login</button>
+            <button on-click="checkUser">CheckUser</button>
+            <button on-click="clearUser">logout</button>
+            <div>
+                status : [[status]]
+            </div> -->
+        </div>
+    </template>
+
+    <script>
+        class pageLogin extends ReduxMixin(Polymer.Element) {
+            static get is() {
+                return 'page-login';
+            }
+            static get properties() {
+                return {
+                    message: {
+                        type: String,
+                        statePath: 'common.message' // Binds state, "Hello, World!"
+                    },
+                    status:{
+                        type:String,
+                        value:'No update !!'
+                    },
+                    value:{
+                        type:String,
+                        value:'112234'
+                    }
+                };
+            }
+            ready(){
+                super.ready();
+                common.setData('5999773e8ca0773d341666fe');
+            }
+            getData(){
+                this.setMessage('loading');
+                common.getData()
+                .then((res)=>this.dispatch({type:'COMMON_SET_MESSAGE',payload:'Hi Redux'}))
+                .then((res)=>this.setMessage('update complete'))
+                .catch((err)=>this.setMessage('update failed')) 
+            }
+            setMessage(val){
+                setTimeout(()=>{
+                    this.status = val;
+                },1000)
+            }
+            login(){
+                const obj = {
+                    email : this.$.email.value,
+                    password : this.$.password.value
+                }
+                auth.login(obj)
+                .then((res)=>auth.setLocalstorage(res.data))
+                .then((res)=>this.checkUser())
+                .then((res)=>this.setMessage('login complete'))
+                .catch((err)=>this.setMessage(err.message)) 
+            }
+            checkUser(){
+                var user = auth.getUser();
+                this.dispatch({type:'AUTH_SET_USER',payload:user})
+            }
+            clearUser(){
+                auth.logout()
+            }
+        }
+
+        window.customElements.define(pageLogin.is, pageLogin);
+    </script>
+</dom-module>

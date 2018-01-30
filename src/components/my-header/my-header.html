@@ -1,0 +1,41 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="my-header">
+    <template>
+        <style>
+            :host {
+                display: block
+            }
+            h2{
+               margin: 0.5rem 1rem 0 1rem;
+            }
+            div{
+                margin: 0 1rem 0.5rem 1rem;
+            }
+        </style>
+        <h2>โซน : </h2>
+        <!-- <div>
+            pageDashboard
+        </div> -->
+        
+        <!-- <slot></slot> -->
+    </template>
+
+    <script>
+      
+        class myHeader extends Polymer.Element {
+          
+            static get is() {
+                return 'my-header';
+            }
+
+            static get properties() {
+                return {
+                    
+                };
+            }
+        }
+
+        window.customElements.define(myHeader.is, myHeader);
+    </script>
+</dom-module>

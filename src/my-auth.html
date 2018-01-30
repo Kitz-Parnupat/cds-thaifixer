@@ -1,0 +1,28 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="./redux-mixin.html">
+<link rel="import" href="./actions/authAction.html">
+<dom-module id="my-auth">
+
+    <script>
+      
+        class myAuth extends ReduxMixin(Polymer.Element) {
+         
+            static get is() {
+                return 'my-auth';
+            }
+            ready(){
+                super.ready();
+                this.checkUser();
+            }
+            checkUser(){
+                var user = auth.getUser();
+                // console.log(user)
+                if(Object.keys(user).length)
+                    this.dispatch({type:'AUTH_SET_USER',payload:user})
+            }
+
+        }
+
+        window.customElements.define(myAuth.is, myAuth);
+    </script>
+</dom-module>

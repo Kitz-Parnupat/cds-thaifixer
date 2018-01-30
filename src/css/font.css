@@ -1,0 +1,29 @@
+@font-face {
+    font-family: MitrBold;
+    src: url('../asset/fonts/Mitr/Mitr-Bold.ttf');
+}
+
+@font-face {
+    font-family: MitrExtraLight;
+    src: url('../asset/fonts/Mitr/Mitr-ExtraLight.ttf');
+}
+
+@font-face {
+    font-family: MitrLight;
+    src: url('../asset/fonts/Mitr/Mitr-Light.ttf');
+}
+
+@font-face {
+    font-family: MitrMedium;
+    src: url('../asset/fonts/Mitr/Mitr-Medium.ttf');
+}
+
+@font-face {
+    font-family: MitrRegular;
+    src: url('../asset/fonts/Mitr/Mitr-Regular.ttf');
+}
+
+@font-face {
+    font-family: MitrSemiBold;
+    src: url('../asset/fonts/Mitr/Mitr-SemiBold.ttf');
+}
