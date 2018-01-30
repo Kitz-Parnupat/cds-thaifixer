@@ -74,41 +74,41 @@
         <app-drawer id="drawer" swipe-open>
             <app-toolbar>
                 <iron-icon class="header-icon" icon="home" noink></iron-icon>
-                <div class="header-drawer">[[user.fullName]]</div>
+                <div class="header-drawer">จัดการข้อมูลพื้นฐาน</div>
             </app-toolbar>
             <div class="drawer-size">
                 <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-                    <div class="drawer-content">ระบบจัดการหน้าร้าน</div>
+                    <div class="drawer-content">จัดการบทความ</div>
                     <a name="dashboard" href="[[rootPath]]">
                         <iron-icon icon="icons:dashboard"></iron-icon>
-                        &nbsp;&nbsp;Dashboard
+                        &nbsp;&nbsp;รายการบทความ
                     </a>
                     <a name="profile" href="[[rootPath]]profile">
-                        <iron-icon icon="social:person"></iron-icon>
-                        &nbsp;&nbsp;Profile
+                        <iron-icon icon="icons:create"></iron-icon>
+                        &nbsp;&nbsp;เขียนบทความ
                     </a>
                     <div class="line"></div>
-                    <div class="drawer-content">ระบบจัดการข้อมูลพื้นฐาน</div>
+                    <div class="drawer-content">จัดการข้อมูลพื้นฐาน</div>
                     <a name="view1" href="[[rootPath]]view1">
                         <iron-icon icon="icons:description"></iron-icon>
-                        &nbsp;&nbsp;View1
+                        &nbsp;&nbsp;สมาชิก
                     </a>
                     <a name="view2" href="[[rootPath]]view2">
                         <iron-icon icon="icons:description"></iron-icon>
-                        &nbsp;&nbsp;View2
+                        &nbsp;&nbsp;หมวดหมู่
                     </a>
                     <a name="view3" href="[[rootPath]]view3">
                         <iron-icon icon="icons:description"></iron-icon>
-                        &nbsp;&nbsp;View3
+                        &nbsp;&nbsp;คำนำหน้าชื่อ
                     </a>
                     <div class="line"></div>
                     <a name="setting" href="[[rootPath]]">
                         <iron-icon icon="icons:settings"></iron-icon>
-                        &nbsp;&nbsp;Setting
+                        &nbsp;&nbsp;ตั้งค่า
                     </a>
                     <a name="exit" href="[[rootPath]]profile">
                         <iron-icon icon="icons:exit-to-app"></iron-icon>
-                        &nbsp;&nbsp;Sign out
+                        &nbsp;&nbsp;ออกจากระบบ
                     </a>
                 </iron-selector>
             </div>
