@@ -1,5 +1,7 @@
 <script>
-  window.My = window.My || { $: {} }
+  window.My = window.My || {
+    $: {}
+  }
 </script>
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="./my-route.html">
@@ -7,18 +9,26 @@
 <link rel="import" href="./layout/layout-main.html">
 <link rel="import" href="./my-auth.html">
 <link rel="import" href="../src/config/config-axios.html">
+<link rel="import" href="./page/page-login/page-login.html">
 <dom-module id="my-app">
   <template>
     <my-route path="{{page}}"></my-route>
-    <my-auth></my-auth>
-    <layout-main id="layout">
+    <my-auth id="auth"></my-auth>
+    <template is="dom-if" if="[[!authStatus]]">
+      <page-login></page-login>
+    </template>
+    <template is="dom-if" if="[[authStatus]]">
+      <layout-main id="layout">
         <my-init page="[[page]]"></my-init>
-    </layout-main>
+      </layout-main>
+    </template>
   </template>
 
   <script>
     class MyApp extends Polymer.Element {
-      static get is() { return 'my-app'; }
+      static get is() {
+        return 'my-app';
+      }
 
       static get properties() {
         return {
@@ -26,29 +36,36 @@
             type: String,
             reflectToAttribute: true,
             observer: '_pageChanged',
+          },
+          authStatus: {
+            type: Boolean,
+            value: false
           }
         };
       }
       connectedCallback() {
         super.connectedCallback();
         My.changePage = this.changePage;
+        this.authStatus = this.$.auth.checkUser();
+        // console.log(this.$.auth.checkUser())
       }
-      changePage(path){
+      changePage(path) {
         window.history.pushState({}, null, path);
         window.dispatchEvent(new CustomEvent('location-changed'));
       }
       _pageChanged(page) {
         // Load page import on demand. Show 404 page if fails
-        if(page == '') page = 'login'
-        var resolvedPageUrl = this.resolveUrl('page/page-'+page+'/page-'+page+'.html');
+        if (page == '') page = 'login'
+        var resolvedPageUrl = this.resolveUrl('page/page-' + page + '/page-' + page + '.html');
         Polymer.importHref(
-            resolvedPageUrl,
-            this._onLoad.bind(this),
-            this._showPage404.bind(this),
-            true);
+          resolvedPageUrl,
+          this._onLoad.bind(this),
+          this._showPage404.bind(this),
+          true);
       }
-      _onLoad(){
-        this.$.layout.$.drawer.close()
+      _onLoad() {
+        console.log('sss')
+        // this.$.layout.$.drawer.close()
       }
       _showPage404() {
         // console.error('view404')

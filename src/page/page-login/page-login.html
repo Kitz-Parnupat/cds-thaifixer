@@ -1,26 +1,60 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../actions/commonAction.html">
 <link rel="import" href="../../actions/authAction.html">
 <link rel="import" href="../../redux-mixin.html">
 <link rel="import" href="../../shared-styles.html">
 <link rel="import" href="../../components/my-input/my-input.html">
+<link rel="import" href="../../components/my-panel/my-panel.html">
 <dom-module id="page-login">
     <template>
         <style include="shared-styles">
-            :host {
-                display: block
+            .flex {
+                height: 100vh;
+                display: flex;
+            }
+
+            .flex-item {
+                margin: auto;
+                width: 400px;
+            }
+
+            .header {
+                color: var(--btn-color-primary-normal);
+                text-align: center;
+            }
+            .content {
+                padding: 0 1rem;
+            }
+            .footer {
+                margin-top: 1rem;
+                text-align: center;
             }
         </style>
-        <div class="container">
-            <my-input label="ทดสอบ" bind-value="{{value}}"></my-input>    
+        <div class="flex">
+            <div class="flex-item">
+                <my-panel box-shadow>
+                    <div class="panel-header header">เข้าสู่ระบบ</div>
+                    <div class="content">
+                        <paper-input label="Email"></paper-input>
+                        <paper-input label="Password" type="password"></paper-input>
+                        <br>
+                        <paper-button class="btn-primary btn-md btn-full-width">Login</paper-button>
+                        <br>
+                    </div>
+                    <div class="footer textCenter">
+                        ลืมรหัสผ่าน ?
+                        <a href="#">click</a>
+                    </div>
+                </my-panel>
+            </div>
             <!-- <h2>Login  [[message]]</h2>
             <label for="email">Email</label>
             <input type="text" id="email" value="test@hotmail.com">
             <label for="password">Password</label>
             <input type="password" id="password" value="Password">
             <button on-click="login">login</button>
-            <button on-click="checkUser">CheckUser</button>
-            <button on-click="clearUser">logout</button>
             <div>
                 status : [[status]]
             </div> -->
@@ -38,48 +72,54 @@
                         type: String,
                         statePath: 'common.message' // Binds state, "Hello, World!"
                     },
-                    status:{
-                        type:String,
-                        value:'No update !!'
+                    status: {
+                        type: String,
+                        value: 'No update !!'
                     },
-                    value:{
-                        type:String,
-                        value:'112234'
+                    value: {
+                        type: String,
+                        value: '112234'
                     }
                 };
             }
-            ready(){
+            ready() {
                 super.ready();
                 common.setData('5999773e8ca0773d341666fe');
             }
-            getData(){
+            getData() {
                 this.setMessage('loading');
                 common.getData()
-                .then((res)=>this.dispatch({type:'COMMON_SET_MESSAGE',payload:'Hi Redux'}))
-                .then((res)=>this.setMessage('update complete'))
-                .catch((err)=>this.setMessage('update failed')) 
+                    .then((res) => this.dispatch({
+                        type: 'COMMON_SET_MESSAGE',
+                        payload: 'Hi Redux'
+                    }))
+                    .then((res) => this.setMessage('update complete'))
+                    .catch((err) => this.setMessage('update failed'))
             }
-            setMessage(val){
-                setTimeout(()=>{
+            setMessage(val) {
+                setTimeout(() => {
                     this.status = val;
-                },1000)
+                }, 1000)
             }
-            login(){
+            login() {
                 const obj = {
-                    email : this.$.email.value,
-                    password : this.$.password.value
+                    email: this.$.email.value,
+                    password: this.$.password.value
                 }
                 auth.login(obj)
-                .then((res)=>auth.setLocalstorage(res.data))
-                .then((res)=>this.checkUser())
-                .then((res)=>this.setMessage('login complete'))
-                .catch((err)=>this.setMessage(err.message)) 
+                    .then((res) => auth.setLocalstorage(res.data))
+                    .then((res) => this.checkUser())
+                    .then((res) => this.setMessage('login complete'))
+                    .catch((err) => this.setMessage(err.message))
             }
-            checkUser(){
+            checkUser() {
                 var user = auth.getUser();
-                this.dispatch({type:'AUTH_SET_USER',payload:user})
+                this.dispatch({
+                    type: 'AUTH_SET_USER',
+                    payload: user
+                })
             }
-            clearUser(){
+            clearUser() {
                 auth.logout()
             }
         }

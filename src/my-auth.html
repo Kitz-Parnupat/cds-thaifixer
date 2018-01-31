@@ -16,9 +16,13 @@
             }
             checkUser(){
                 var user = auth.getUser();
-                // console.log(user)
-                if(Object.keys(user).length)
+                if(Object.keys(user).length){
                     this.dispatch({type:'AUTH_SET_USER',payload:user})
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
 
         }

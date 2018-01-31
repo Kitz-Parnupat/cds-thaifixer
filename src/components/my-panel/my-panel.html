@@ -1,0 +1,48 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="my-panel">
+    <template>
+        <style>
+            .panel{
+                background-color: white;
+                padding: 1rem;
+                width: 100%;
+                height: auto;
+                border:1px solid white;
+                border-radius: 4px;
+            }
+            .panel[box-shadow]{
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+            }
+            .panel ::slotted(.panel-header){
+                font-size: 1.5rem;
+            }
+        </style>
+        <div class="panel" box-shadow="[[boxShadow]]">
+            <slot></slot>
+        </div>
+    </template>
+
+    <script>
+      
+        class myPanel extends Polymer.Element {
+            
+            static get is() {
+                return 'my-panel';
+            }
+
+            static get properties() {
+                return {
+                    boxShadow:Boolean
+                };
+            }
+            
+            ready(){
+                super.ready()
+            }
+
+        }
+
+        window.customElements.define(myPanel.is, myPanel);
+    </script>
+</dom-module>
