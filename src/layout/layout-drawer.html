@@ -106,7 +106,7 @@
                         <iron-icon icon="icons:settings"></iron-icon>
                         &nbsp;&nbsp;ตั้งค่า
                     </a>
-                    <a name="exit" href="[[rootPath]]profile">
+                    <a name="exit" href="#" on-click="signOut">
                         <iron-icon icon="icons:exit-to-app"></iron-icon>
                         &nbsp;&nbsp;ออกจากระบบ
                     </a>
@@ -164,6 +164,10 @@
             }
             close() {
                 this.$.drawer.close()
+            }
+            signOut(){
+                localStorage.removeItem('user');
+                window.location.reload()
             }
         }
 

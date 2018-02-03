@@ -82,6 +82,7 @@
             login() {
                 auth.login(this.form)
                 .then((res)=>auth.setLocalstorage(res.data.data))
+                .then(()=>{My.changePage('blog')})
                 .then(()=>{window.location.reload()})
             }
             checkUser() {
