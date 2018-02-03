@@ -2,13 +2,17 @@
 <link rel="import" href="../../../bower_components/vaadin-material-theme/vaadin-grid.html">
 <link rel="import" href="../../../bower_components/vaadin-grid/vaadin-grid.html">
 <link rel="import" href="../../components/my-vaadin-grid-style/my-vaadin-grid-style.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../shared-styles.html">
+<link rel="import" href="../../actions/blogAction.html">
+<link rel="import" href="../../redux-mixin.html">
 <dom-module id="blog-list">
     <template>
         <style include="shared-styles">
         </style>
 
-        <vaadin-grid class="vaadin-grid-material" items="[1,2,3,4]">
+        <vaadin-grid class="vaadin-grid-material" items="[[list]]">
 
             <vaadin-grid-column width="50px" flex-grow="0">
                 <template class="header">#</template>
@@ -17,17 +21,18 @@
 
             <vaadin-grid-column>
                 <template class="header">ชื่อบทความ</template>
-                <template>[[item.firstName]]</template>
+                <template>[[item.blog_title]]</template>
             </vaadin-grid-column>
+
+            <!-- <vaadin-grid-column>
+                <template class="header">วันที่โพส</template>
+                <template>[[item.created_at]]</template>
+            </vaadin-grid-column> -->
 
             <vaadin-grid-column>
-                <template class="header">วันที่โพส</template>
-                <template>[[item.lastName]]</template>
-            </vaadin-grid-column>
-
-            <vaadin-grid-column width="150px">
-                <template class="header">บทความโดย</template>
+                <template class="header">จัดการ</template>
                 <template>
+                    <paper-icon-button icon="create"></paper-icon-button>
                     <!-- <p style="white-space: normal">[[item.address.street]], [[item.address.city]]</p> -->
                 </template>
             </vaadin-grid-column>
@@ -38,7 +43,7 @@
     </template>
 
     <script>
-        class blogList extends Polymer.Element {
+        class blogList extends ReduxMixin(Polymer.Element) {
 
             static get is() {
                 return 'blog-list';
@@ -46,12 +51,16 @@
 
             static get properties() {
                 return {
-
+                    list:{
+                        type:Array,
+                        statePath:'blog.list'
+                    }
                 };
             }
             ready(){
                 super.ready()
-
+                blog.getBlog()
+                .then((res)=> this.dispatch({type: 'GET_LIST_BLOG',payload: res.data.data}))
             }
             count(val){
                 return val + 1;
