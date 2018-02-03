@@ -2,8 +2,8 @@
 <link rel="import" href="../../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../components/my-panel/my-panel.html">
 <link rel="import" href="../../../bower_components/my-editor/my-editor.html">
-<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
-้<link rel="import" href="../../../bower_components/vaadin-combo-box/vaadin-combo-box.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html"> ้
+<link rel="import" href="../../../bower_components/vaadin-combo-box/vaadin-combo-box.html">
 <link rel="import" href="../../redux-mixin.html">
 <link rel="import" href="../../shared-styles.html">
 <link rel="import" href="../../actions/blogAction.html">
@@ -28,7 +28,8 @@
                         <paper-input label="หัวข้อ" placeholder="หัวข้อบทความ" value="{{form.blog_title}}"></paper-input>
                     </div>
                     <div class="col-xs-12">
-                        <vaadin-combo-box label="หมวดหมู่" items="[[category]]" item-label-path="blog_category_name" item-value-path="_id"  placeholder="เลือกหมวดหมู่" value="{{form.blog_category_id}}">
+                        <vaadin-combo-box label="หมวดหมู่" items="[[category]]" item-label-path="blog_category_name" item-value-path="_id" placeholder="เลือกหมวดหมู่"
+                            value="{{form.blog_category_id}}">
                             <template>
                                 {{item.blog_category_name}}
                             </template>
@@ -40,7 +41,7 @@
                 </div>
                 <br>
 
-                <my-editor id="editor" value="{{form.blog_content}}"></my-editor>
+                <my-editor id="editor"></my-editor>
             </my-panel>
             <div style="margin-bottom:0.5rem"></div>
             <div class="row end-xs">
@@ -71,8 +72,8 @@
                         type: Object,
                         statePath: 'auth.user'
                     },
-                    category:{
-                        type:Array,
+                    category: {
+                        type: Array,
                         statePath: 'category.list'
                     }
                 };
@@ -82,9 +83,12 @@
                 super.ready()
                 var id = location.href.split('id=')[1];
                 category.getCategory()
-                .then((res)=>{
-                    this.dispatch({type:'GET_LIST_CATEGORY',payload: res.data.data})
-                })
+                    .then((res) => {
+                        this.dispatch({
+                            type: 'GET_LIST_CATEGORY',
+                            payload: res.data.data
+                        })
+                    })
                 if (id) {
                     blog.selectBlog(id)
                         .then((res) => this.dispatch({
@@ -95,31 +99,47 @@
             }
             setTextEditor(val) {
                 // console.log(val.blog_content)
-                if (val.blog_content)
+                if (val.blog_content) {
+                    this.$.editor.value = val.blog_content;
                     this.$.editor.addContent()
+                }
                 // this.$.editor.value = val.blog_content;
             }
             getForm() {
                 this.$.editor.getHtml();
-                if(this.form._id){
-                    console.log(this.form)
+                this.form.blog_content = this.$.editor.value;
+                if (this.form._id) {
+                    // console.log(this.form)
                     blog.updateBlog(this.form)
-                    .then((res)=>{
-                        console.log(res.data)
+                    .then((res) => {
+                        swal({
+                            nylon: 'success',
+                            title: "บันทึกสำเร็จ",
+                            text: "แก้ไขบทความแล้ว",
+                            icon: "success",
+                            buttons: false,
+                            timer: 3000
+                        })
                     })
-                }
-                else{
+                } else {
                     // console.log(this.user)
                     this.form.user_id = this.user.id;
                     this.form.blog_status = 'public'
                     blog.postBlog(this.form)
-                    .then((res)=>{
-                        console.log(res.data)
+                    .then((res) => {
+                        swal({
+                            nylon: 'success',
+                            title: "บันทึกสำเร็จ",
+                            text: "เพิ่มบทความแล้ว",
+                            icon: "success",
+                            buttons: false,
+                            timer: 3000
+                        })
                     })
                     // console.log(this.form)
-                }   
-               
-               
+                }
+
+
             }
 
         }

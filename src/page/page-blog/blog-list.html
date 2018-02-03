@@ -33,10 +33,11 @@
                 <template>[[item.created_at]]</template>
             </vaadin-grid-column> -->
 
-            <vaadin-grid-column  width="150px" flex-grow="0">
+            <vaadin-grid-column width="150px" flex-grow="0">
                 <template class="header">จัดการ</template>
                 <template>
                     <paper-icon-button on-tap="editBlog" icon="create"></paper-icon-button>
+                    <paper-icon-button on-tap="deleteBlog" icon="delete"></paper-icon-button>
                     <!-- <p style="white-space: normal">[[item.address.street]], [[item.address.city]]</p> -->
                 </template>
             </vaadin-grid-column>
@@ -55,25 +56,51 @@
 
             static get properties() {
                 return {
-                    list:{
-                        type:Array,
-                        statePath:'blog.list'
+                    list: {
+                        type: Array,
+                        statePath: 'blog.list'
                     }
                 };
             }
-            ready(){
+            ready() {
                 super.ready()
-                blog.getBlog()
-                .then((res)=> this.dispatch({type: 'GET_LIST_BLOG',payload: res.data.data}))
+                this.getBlog()
             }
-            count(val){
+            getBlog() {
+                blog.getBlog()
+                    .then((res) => this.dispatch({
+                        type: 'GET_LIST_BLOG',
+                        payload: res.data.data
+                    }))
+            }
+            count(val) {
                 return val + 1;
             }
-            editBlog(e){
+            editBlog(e) {
                 // console.log(e.model.item._id);
                 blog.selectBlog(e.model.item._id)
-                .then((res)=>this.dispatch({type: 'SELECT_BLOG',payload: res.data.data}))
-                .then(()=>{My.changePage('content?id='+e.model.item._id)})
+                    .then((res) => this.dispatch({
+                        type: 'SELECT_BLOG',
+                        payload: res.data.data
+                    }))
+                    .then(() => {
+                        My.changePage('content?id=' + e.model.item._id)
+                    })
+            }
+            deleteBlog(e) {
+                swal({
+                    title: "อยากลบบทความใช้ไหม ?",
+                    text: "หากลบบทความแล้วจะไม่สามารถกู้คืนได้",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((res)=>{
+                    if(res){
+                        blog.deleteBlog(e.model.item._id)
+                        .then((res)=>this.getBlog())
+                    }
+                })
             }
 
         }
