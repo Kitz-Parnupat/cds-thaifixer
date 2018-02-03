@@ -1,0 +1,63 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="my-vaadin-grid" theme-for="vaadin-grid">
+  <template>
+    <style>
+      :host {
+        height: auto;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+      }
+      :host [part~="cell"]:not([part~="details-cell"]) ::slotted(vaadin-grid-cell-content) {
+        white-space: normal;
+      }
+      [part~="cell"] {
+        color: #000;
+        font-size: 1rem;
+        padding:5px;
+        /* border-right:1px solid #ddd; */
+        /* font-family: TrirongRegular; */
+        margin:0;
+      }
+      [part~="cell"]:last-child {
+        border-right:0;
+      }
+      [part~="cell"]:focus {
+        outline: none;
+      }
+      [part~="header-cell"],
+      [part~="footer-cell"] {
+        /* color: white; */
+        font-size: 1rem;
+        /* background-color:#62a8ea; */
+        padding: 0.5rem;
+        text-align:center;
+        font-family: MitrLight;
+      }
+      [part~="footer-cell"] {
+        /* background-color:#EEE; */
+        color: #555;
+      }
+      [part~="body-cell"] {
+        color: #000;
+        font-size: 1rem;
+        padding:5px;
+        /* font-family: TrirongRegular; */
+        margin:0;
+        text-align: center;
+      }
+      [part~="body-cell"],
+      [part~="row"]:last-child [part~="header-cell"] {
+        border-bottom: 1px solid #ddd;
+      }
+      /* [part~="row"]:nth-child(even) [part~="body-cell"] {
+        background-color:#f3f7f9;
+      } */
+      /* [part~="row"]:hover [part~="body-cell"] {
+        background-color:#ECF9FA;
+      } */
+      
+    
+    </style>
+  </template>
+</dom-module>

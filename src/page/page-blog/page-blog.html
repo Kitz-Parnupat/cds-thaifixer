@@ -1,0 +1,34 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../shared-styles.html">
+<link rel="import" href="./blog-list.html">
+<dom-module id="page-blog">
+    <template>
+        <style include="shared-styles">
+        </style>
+        <div class="container">
+            <div class="title">
+                รายการบทความ
+            </div>
+            <blog-list></blog-list>   
+        </div>
+    </template>
+
+    <script>
+
+        class pageBlog extends Polymer.Element {
+           
+            static get is() {
+                return 'page-blog';
+            }
+
+            static get properties() {
+                return {
+                    
+                };
+            }
+
+        }
+
+        window.customElements.define(pageBlog.is, pageBlog);
+    </script>
+</dom-module>

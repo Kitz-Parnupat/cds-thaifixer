@@ -2,7 +2,7 @@
 <script>
     class authAction{
         login(val){
-            return axios.post('./auth/sign_in',val)
+            return axios.post('./auth/login',val)
         }
         logout(){
             localStorage.removeItem('user');

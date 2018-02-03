@@ -1,0 +1,21 @@
+<!-- <script type="application/javascript" src="../../node_modules/lodash/lodash.min.js"></script> -->
+<script>
+    class blogAction{
+        getBlog(){
+            return axios.get('./blog/post')
+        }
+        selectBlog(id){
+            return axios.get('./blog/post/By?id='+id)
+        }
+        postBlog(data){
+            return axios.post('./blog/post/create',data)
+        }
+        updateBlog(data){
+            return axios.put('./blog/post/update',data)
+        }
+        deleteBlog(id){
+            return axios.delete('./blog/post/delete?id='+id)
+        }
+    }
+    const blog = new blogAction()
+</script>

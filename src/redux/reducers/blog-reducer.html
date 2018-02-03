@@ -1,0 +1,15 @@
+<script>
+        const blogReducer = (function(){
+            const initial = {
+                list: {}
+            }
+            const reducer = function (state=initial, action) {
+                switch (action.type) {
+                    case 'GET_LIST_BLOG': 
+                        return Object.assign({},state,{user:action.payload})
+                    default: return state
+                }
+            };
+            return reducer
+        })()
+</script>

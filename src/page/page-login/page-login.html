@@ -18,6 +18,7 @@
             .flex-item {
                 margin: auto;
                 width: 400px;
+                height: auto;
             }
 
             .header {
@@ -37,10 +38,10 @@
                 <my-panel box-shadow>
                     <div class="panel-header header">ThaiFixer.com</div>
                     <div class="content">
-                        <paper-input label="Username"></paper-input>
-                        <paper-input label="Password" type="password"></paper-input>
+                        <paper-input label="Username" value="{{form.email}}"></paper-input>
+                        <paper-input label="Password" type="password" value="{{form.password}}"></paper-input>
                         <br>
-                        <paper-button class="btn-primary btn-md btn-full-width">เข้าสู่ระบบ</paper-button>
+                        <paper-button class="btn-primary btn-md btn-full-width" on-tap="login">เข้าสู่ระบบ</paper-button>
                         <br>
                     </div>
                     <div class="footer textCenter">
@@ -68,49 +69,20 @@
             }
             static get properties() {
                 return {
-                    message: {
-                        type: String,
-                        statePath: 'common.message' // Binds state, "Hello, World!"
-                    },
-                    status: {
-                        type: String,
-                        value: 'No update !!'
-                    },
-                    value: {
-                        type: String,
-                        value: '112234'
+                    form:{
+                        type:Object,
+                        value:{}
                     }
                 };
             }
             ready() {
                 super.ready();
-                common.setData('5999773e8ca0773d341666fe');
-            }
-            getData() {
-                this.setMessage('loading');
-                common.getData()
-                    .then((res) => this.dispatch({
-                        type: 'COMMON_SET_MESSAGE',
-                        payload: 'Hi Redux'
-                    }))
-                    .then((res) => this.setMessage('update complete'))
-                    .catch((err) => this.setMessage('update failed'))
-            }
-            setMessage(val) {
-                setTimeout(() => {
-                    this.status = val;
-                }, 1000)
+                // common.setData('5999773e8ca0773d341666fe');
             }
             login() {
-                const obj = {
-                    email: this.$.email.value,
-                    password: this.$.password.value
-                }
-                auth.login(obj)
-                    .then((res) => auth.setLocalstorage(res.data))
-                    .then((res) => this.checkUser())
-                    .then((res) => this.setMessage('login complete'))
-                    .catch((err) => this.setMessage(err.message))
+                auth.login(this.form)
+                .then((res)=>auth.setLocalstorage(res.data.data))
+                .then(()=>{window.location.reload()})
             }
             checkUser() {
                 var user = auth.getUser();
