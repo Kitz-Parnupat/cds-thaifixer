@@ -1,0 +1,129 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html"> ้
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../components/my-panel/my-panel.html">
+<link rel="import" href="../../../bower_components/my-editor/my-editor.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+้<link rel="import" href="../../../bower_components/vaadin-combo-box/vaadin-combo-box.html">
+<link rel="import" href="../../redux-mixin.html">
+<link rel="import" href="../../shared-styles.html">
+<link rel="import" href="../../actions/blogAction.html">
+<link rel="import" href="../../actions/categoryAction.html">
+<dom-module id="page-content">
+    <template>
+        <style include="shared-styles">
+            .bg-white {
+                background-color: white;
+            }
+
+            paper-button {
+                margin: 0;
+            }
+        </style>
+
+        <div class="container">
+            <div class="title">เขียนบทความ</div>
+            <my-panel>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <paper-input label="หัวข้อ" placeholder="หัวข้อบทความ" value="{{form.blog_title}}"></paper-input>
+                    </div>
+                    <div class="col-xs-12">
+                        <vaadin-combo-box label="หมวดหมู่" items="[[category]]" item-label-path="blog_category_name" item-value-path="_id"  placeholder="เลือกหมวดหมู่" value="{{form.blog_category_id}}">
+                            <template>
+                                {{item.blog_category_name}}
+                            </template>
+                        </vaadin-combo-box>
+                    </div>
+                    <div class="col-xs-12">
+                        <paper-input label="ลิ้งรูปภาพ" placeholder="url รูปภาพของบทความ" value="{{form.blog_img_url}}"></paper-input>
+                    </div>
+                </div>
+                <br>
+
+                <my-editor id="editor" value="{{form.blog_content}}"></my-editor>
+            </my-panel>
+            <div style="margin-bottom:0.5rem"></div>
+            <div class="row end-xs">
+                <div class="col-xs-12">
+                    <paper-button class="btn-primary btn-md" on-tap="getForm">เพิ่มบทความ</paper-button>
+                    <!-- <paper-button class="btn-md">ยกเลิก</paper-button> -->
+                </div>
+            </div>
+        </div>
+
+    </template>
+
+    <script>
+        class pageContent extends ReduxMixin(Polymer.Element) {
+
+            static get is() {
+                return 'page-content';
+            }
+
+            static get properties() {
+                return {
+                    form: {
+                        type: Object,
+                        statePath: 'blog.data',
+                        observer: 'setTextEditor'
+                    },
+                    user: {
+                        type: Object,
+                        statePath: 'auth.user'
+                    },
+                    category:{
+                        type:Array,
+                        statePath: 'category.list'
+                    }
+                };
+            }
+
+            ready() {
+                super.ready()
+                var id = location.href.split('id=')[1];
+                category.getCategory()
+                .then((res)=>{
+                    this.dispatch({type:'GET_LIST_CATEGORY',payload: res.data.data})
+                })
+                if (id) {
+                    blog.selectBlog(id)
+                        .then((res) => this.dispatch({
+                            type: 'SELECT_BLOG',
+                            payload: res.data.data
+                        }))
+                }
+            }
+            setTextEditor(val) {
+                // console.log(val.blog_content)
+                if (val.blog_content)
+                    this.$.editor.addContent()
+                // this.$.editor.value = val.blog_content;
+            }
+            getForm() {
+                this.$.editor.getHtml();
+                if(this.form._id){
+                    console.log(this.form)
+                    blog.updateBlog(this.form)
+                    .then((res)=>{
+                        console.log(res.data)
+                    })
+                }
+                else{
+                    // console.log(this.user)
+                    this.form.user_id = this.user.id;
+                    this.form.blog_status = 'public'
+                    blog.postBlog(this.form)
+                    .then((res)=>{
+                        console.log(res.data)
+                    })
+                    // console.log(this.form)
+                }   
+               
+               
+            }
+
+        }
+
+        window.customElements.define(pageContent.is, pageContent);
+    </script>
+</dom-module>

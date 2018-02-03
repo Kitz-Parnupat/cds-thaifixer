@@ -2,14 +2,17 @@
 <link rel="import" href="./redux/reducers/common-reducer.html">
 <link rel="import" href="./redux/reducers/auth-reducer.html">
 <link rel="import" href="./redux/reducers/blog-reducer.html">
+<link rel="import" href="./redux/reducers/category-reducer.html">
 <script src="../node_modules/redux/dist/redux.js"></script>
 <script>
     // Setup a Redux store
     const rootReducer = Redux.combineReducers({
         common : commonReducer,
         auth : authReducer,
-        blog : blogReducer
+        blog : blogReducer,
+        category : categoryReducer
     })
+    
     const store = Redux.createStore(rootReducer,
         Redux.compose(
             window.devToolsExtension

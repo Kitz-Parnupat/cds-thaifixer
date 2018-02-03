@@ -10,18 +10,29 @@
 <link rel="import" href="./my-auth.html">
 <link rel="import" href="../src/config/config-axios.html">
 <link rel="import" href="./page/page-login/page-login.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <dom-module id="my-app">
   <template>
     <my-route path="{{page}}"></my-route>
     <my-auth id="auth"></my-auth>
-    <template is="dom-if" if="[[!authStatus]]">
+    <iron-pages selected="[[selected]]" attr-for-selected="name" fallback-selection="view404" role="main">
+      <div name="login">
+        <page-login></page-login>
+      </div>
+      <div name="app">
+        <layout-main id="layout">
+          <my-init page="[[page]]"></my-init>
+        </layout-main>
+      </div>
+    </iron-pages>
+    <!-- <template is="dom-if" if="[[!authStatus]]">
       <page-login></page-login>
     </template>
     <template is="dom-if" if="[[authStatus]]">
       <layout-main id="layout">
         <my-init page="[[page]]"></my-init>
       </layout-main>
-    </template>
+    </template> -->
   </template>
 
   <script>
@@ -40,6 +51,10 @@
           authStatus: {
             type: Boolean,
             value: false
+          },
+          selected: {
+            type: String,
+            value: 'login'
           }
         };
       }
@@ -47,6 +62,13 @@
         super.connectedCallback();
         My.changePage = this.changePage;
         this.authStatus = this.$.auth.checkUser();
+        if(!this.authStatus){
+          this.selected = 'login'
+          this.changePage('login')
+        }
+        else {
+          this.selected = 'app'
+        }
         // console.log(this.$.auth.checkUser())
       }
       changePage(path) {
@@ -64,8 +86,9 @@
           true);
       }
       _onLoad() {
-        console.log('sss')
-        // this.$.layout.$.drawer.close()
+        // console.log('sss')
+        // console.log(this.$.layout)
+        this.$.layout.$.drawer.close()
       }
       _showPage404() {
         // console.error('view404')

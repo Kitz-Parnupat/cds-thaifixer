@@ -1,0 +1,24 @@
+
+<script>
+    class categoryAction{
+        setData(val){
+           this.id = val;
+        }
+        getCategory(){
+            return axios.get('./blog/category')
+        }
+        selectCategory(id){
+            return axios.get('./blog/category/post?id='+id)
+        }
+        postCategory(data){
+            return axios.post('./blog/category/create',data)
+        }
+        updateCategory(data){
+            return axios.put('./blog/category/update',data)
+        }
+        deleteCategory(id){
+            return axios.delete('./blog/category/delete?id='+id)
+        }
+    }
+    const category = new categoryAction()
+</script>

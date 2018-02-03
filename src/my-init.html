@@ -3,6 +3,7 @@
 
 <link rel="lazy-import" href="./page/page-login/page-login.html">
 <link rel="lazy-import" href="./page/page-blog/page-blog.html">
+<link rel="lazy-import" href="./page/page-content/page-content.html">
 <link rel="lazy-import" href="./page/page-view404/page-view404.html">
 
 <dom-module id="my-init">
@@ -10,6 +11,7 @@
         <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
             <page-login name="login"></page-login>
             <page-blog name="blog"></page-blog>
+            <page-content name="content"></page-content>
             <page-view404 name="view404"></page-view404>      
         </iron-pages>
     </template>

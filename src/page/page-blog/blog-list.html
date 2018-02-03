@@ -14,9 +14,13 @@
 
         <vaadin-grid class="vaadin-grid-material" items="[[list]]">
 
-            <vaadin-grid-column width="50px" flex-grow="0">
-                <template class="header">#</template>
-                <template>[[count(index)]]</template>
+            <vaadin-grid-column width="100px" flex-grow="0">
+                <template class="header">
+                    <div style="text-align:center">#</div>
+                </template>
+                <template>
+                    <div style="text-align:center">[[count(index)]]</div>
+                </template>
             </vaadin-grid-column>
 
             <vaadin-grid-column>
@@ -29,10 +33,10 @@
                 <template>[[item.created_at]]</template>
             </vaadin-grid-column> -->
 
-            <vaadin-grid-column>
+            <vaadin-grid-column  width="150px" flex-grow="0">
                 <template class="header">จัดการ</template>
                 <template>
-                    <paper-icon-button icon="create"></paper-icon-button>
+                    <paper-icon-button on-tap="editBlog" icon="create"></paper-icon-button>
                     <!-- <p style="white-space: normal">[[item.address.street]], [[item.address.city]]</p> -->
                 </template>
             </vaadin-grid-column>
@@ -64,6 +68,12 @@
             }
             count(val){
                 return val + 1;
+            }
+            editBlog(e){
+                // console.log(e.model.item._id);
+                blog.selectBlog(e.model.item._id)
+                .then((res)=>this.dispatch({type: 'SELECT_BLOG',payload: res.data.data}))
+                .then(()=>{My.changePage('content?id='+e.model.item._id)})
             }
 
         }
