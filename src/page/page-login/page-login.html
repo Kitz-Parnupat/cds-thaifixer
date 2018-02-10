@@ -80,20 +80,20 @@
                 // common.setData('5999773e8ca0773d341666fe');
             }
             login() {
-                auth.login(this.form)
-                .then((res)=>auth.setLocalstorage(res.data.data))
+                My.auth.login(this.form)
+                .then((res)=>My.auth.setLocalstorage(res.data.data))
                 .then(()=>{My.changePage('blog')})
                 .then(()=>{window.location.reload()})
             }
             checkUser() {
-                var user = auth.getUser();
+                var user = My.auth.getUser();
                 this.dispatch({
                     type: 'AUTH_SET_USER',
                     payload: user
                 })
             }
             clearUser() {
-                auth.logout()
+                My.auth.logout()
             }
         }
 

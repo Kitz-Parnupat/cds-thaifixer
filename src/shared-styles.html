@@ -9,13 +9,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-
+<link rel="import" href="./components/my-styles/my-flexbox-grid.html">
+<link rel="import" href="./components/my-styles/my-fonts.html">
 <!-- shared styles for all views -->
 <dom-module id="shared-styles">
-  <link rel="import" type="css" href="./css/flexbox-grid.css">
-  <link rel="import" type="css" href="./css/font.css">
   <template>
-    <style>
+    <style include="my-flexbox-grid my-fonts">
       :host{
         --btn-color-default-normal:#e4eaec;
         --btn-color-default-hover:#ccd5db;

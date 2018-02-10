@@ -11,6 +11,7 @@
 <link rel="import" href="../src/config/config-axios.html">
 <link rel="import" href="./page/page-login/page-login.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<!-- <link rel="import" href="./actions/authAction.html"> -->
 <script src="../node_modules/sweetalert/dist/sweetalert.min.js"></script>
 <dom-module id="my-app">
   <template>
@@ -62,7 +63,9 @@
       connectedCallback() {
         super.connectedCallback();
         My.changePage = this.changePage;
+        // console.log(auth)
         this.authStatus = this.$.auth.checkUser();
+        // console.log(this.authStatus)
         if(!this.authStatus){
           this.selected = 'login'
           this.changePage('login')

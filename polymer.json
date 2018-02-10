@@ -2,9 +2,9 @@
   "entrypoint": "index.html",
   "shell": "src/my-app.html",
   "fragments": [
-    "src/page/page-dashboard/page-dashboard.html",
+    "src/page/page-blog/page-blog.html",
     "src/page/page-login/page-login.html",
-    "src/page/page-profile/page-profile.html",
+    "src/page/page-content/page-content.html",
     "src/page/page-view404/page-view404.html"
   ],
   "sources": [

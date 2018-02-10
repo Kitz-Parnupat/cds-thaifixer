@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="./redux-mixin.html">
 <link rel="import" href="./actions/authAction.html">
+<script type="application/javascript" src="../node_modules/lodash/lodash.min.js"></script>
 <dom-module id="my-auth">
 
     <script>
@@ -12,10 +13,17 @@
             }
             ready(){
                 super.ready();
-                this.checkUser();
+                // this.checkUser();
+            }
+            getUser(){
+                var user = JSON.parse(localStorage.getItem('user'));
+                if(user) return _.omit(user,['token','success','status']);
+                else return {};
             }
             checkUser(){
-                var user = auth.getUser();
+                // console.log(this.getUser())
+                // conssole.log('test')
+                var user = this.getUser();
                 if(Object.keys(user).length){
                     this.dispatch({type:'AUTH_SET_USER',payload:user})
                     return true;

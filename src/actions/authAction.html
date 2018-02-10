@@ -1,4 +1,4 @@
-<script type="application/javascript" src="../../node_modules/lodash/lodash.min.js"></script>
+<!-- <script type="application/javascript" src="../../node_modules/lodash/lodash.min.js"></script> -->
 <script>
     class authAction{
         login(val){
@@ -11,10 +11,10 @@
             localStorage.setItem('user',JSON.stringify(data))
         }
         getUser(){
-            var user = JSON.parse(localStorage.getItem('user'));
-            if(user) return _.omit(user,['token','success']);
-            else return {};
+            // var user = JSON.parse(localStorage.getItem('user'));
+            // if(user) return _.omit(user,['token','success']);
+            // else return {};
         }
     }
-    const auth = new authAction()
+    My.auth = new authAction()
 </script>
