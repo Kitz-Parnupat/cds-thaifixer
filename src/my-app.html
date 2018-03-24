@@ -27,14 +27,6 @@
         </layout-main>
       </div>
     </iron-pages>
-    <!-- <template is="dom-if" if="[[!authStatus]]">
-      <page-login></page-login>
-    </template>
-    <template is="dom-if" if="[[authStatus]]">
-      <layout-main id="layout">
-        <my-init page="[[page]]"></my-init>
-      </layout-main>
-    </template> -->
   </template>
 
   <script>
@@ -66,11 +58,10 @@
         // console.log(auth)
         this.authStatus = this.$.auth.checkUser();
         // console.log(this.authStatus)
-        if(!this.authStatus){
+        if (!this.authStatus) {
           this.selected = 'login'
           this.changePage('login')
-        }
-        else {
+        } else {
           this.selected = 'app'
         }
         // console.log(this.$.auth.checkUser())
@@ -79,23 +70,34 @@
         window.history.pushState({}, null, path);
         window.dispatchEvent(new CustomEvent('location-changed'));
       }
+      coverPath(path) {
+        var path = path.split(/(?=[A-Z])/);
+        var name = '';
+        for (let index = 0; index < path.length; index++) {
+          if (index == 0) {
+            name = path[index].toLowerCase()
+          } else {
+            name += '-' + path[index].toLowerCase()
+          }
+        }
+        return name
+      }
       _pageChanged(page) {
         // Load page import on demand. Show 404 page if fails
-        if (page == '') page = 'login'
-        var resolvedPageUrl = this.resolveUrl('page/page-' + page + '/page-' + page + '.html');
+        var newPage = '';
+        if (page == '') newPage = 'login'
+        else newPage = this.coverPath(page)
+        var path = 'page/page-' + newPage + '/page-' + newPage + '.html';
         Polymer.importHref(
-          resolvedPageUrl,
+          this.resolveUrl(path),
           this._onLoad.bind(this),
           this._showPage404.bind(this),
           true);
       }
       _onLoad() {
-        // console.log('sss')
-        // console.log(this.$.layout)
         this.$.layout.$.drawer.close()
       }
       _showPage404() {
-        // console.error('view404')
         this.page = 'view404';
       }
     }

@@ -1,0 +1,79 @@
+<script>
+    const layoutReducer = (function () {
+        const initial = {
+            menu: [{
+                    title: 'ข้อมูลพื้นฐาน',
+                    submenu: [{
+                            name: 'สมาชิก',
+                            path: 'user'
+                        },
+                        {
+                            name: 'เพศ',
+                            path: 'genders'
+                        },
+                        {
+                            name: 'คำนำหน้า',
+                            path: 'prefixs'
+                        },
+                        {
+                            name: 'ประเภทร้านค้า',
+                            path: 'storeType'
+                        }
+                    ]
+                },
+                {
+                    title: 'ข้อมูลเกี่ยวกับช่าง',
+                    submenu: [{
+                            name: 'ประเภทช่าง',
+                            path: 'technicianCategories'
+                        },
+                        {
+                            name: 'หมวดหมู่ช่าง',
+                            path: 'technicianTypes'
+                        },
+                        {
+                            name: 'บริการช่าง',
+                            path: 'technicianTags'
+                        }
+                    ]
+                },
+                {
+                    title: 'ข้อมูลเกี่ยวกับสถานที่',
+                    submenu: [ 
+                        {
+                            name: 'ภูมิภาค',
+                            path: 'geographies'
+                        },
+                        {
+                            name: 'จังหวัด',
+                            path: 'provinces'
+                        },
+                        {
+                            name: 'อำเภอ',
+                            path: 'amphurs'
+                        },
+                        {
+                            name: 'ตำบล',
+                            path: 'districts'
+                        },
+                        {
+                            name: 'รหัสไปรษณี',
+                            path: 'zipcodes'
+                        }
+                    ]
+                }
+            ]
+        }
+        const reducer = function (state = initial, action) {
+            switch (action.type) {
+                case 'LAYOUT_GET_MENU':
+                    return Object.assign({}, state, {
+                        menu: action.payload
+                    })
+                default:
+                    return state
+            }
+        };
+        return reducer
+    })()
+</script>

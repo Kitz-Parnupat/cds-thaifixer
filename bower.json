@@ -24,7 +24,8 @@
     "vaadin-material-theme": "vaadin/vaadin-material-theme#^0.3.0",
     "vaadin-grid": "vaadin/vaadin-grid#^4.1.2",
     "my-editor": "kitz-parnupat/my-editor#^0.0.1",
-    "vaadin-combo-box": "vaadin/vaadin-combo-box#^2.0.0"
+    "vaadin-combo-box": "vaadin/vaadin-combo-box#^2.0.0",
+    "iron-collapse": "PolymerElements/iron-collapse#^2.2.0"
   },
   "resolutions": {
     "polymer": "^2.0.0"

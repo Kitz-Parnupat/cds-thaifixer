@@ -5,6 +5,7 @@
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../redux-mixin.html">
 <link rel="import" href="../shared-styles.html">
@@ -17,6 +18,7 @@
                 height: 48px;
                 opacity: 87%;
             }
+
             /* #FAFAFA */
 
             .drawer-list a {
@@ -62,12 +64,14 @@
                 margin: 0.5rem 0;
                 border-top: 1px solid #ddd;
             }
-            .drawer-size{
+
+            .drawer-size {
                 height: calc(100% - 48px);
                 box-sizing: border-box;
                 overflow-y: auto;
             }
-            #drawer{
+
+            #drawer {
                 z-index: 1;
             }
         </style>
@@ -88,20 +92,21 @@
                         &nbsp;&nbsp;เขียนบทความ
                     </a>
                     <div class="line"></div>
-                    <div class="drawer-content">จัดการข้อมูลพื้นฐาน</div>
-                    <a name="view1" href="[[rootPath]]view1">
-                        <iron-icon icon="icons:description"></iron-icon>
-                        &nbsp;&nbsp;สมาชิก
-                    </a>
-                    <a name="view2" href="[[rootPath]]view2">
-                        <iron-icon icon="icons:description"></iron-icon>
-                        &nbsp;&nbsp;หมวดหมู่
-                    </a>
-                    <a name="view3" href="[[rootPath]]view3">
-                        <iron-icon icon="icons:description"></iron-icon>
-                        &nbsp;&nbsp;คำนำหน้าชื่อ
-                    </a>
-                    <div class="line"></div>
+                    <template is="dom-repeat" items="[[menu]]" index-as="num">
+                        <div class="drawer-content">
+                            [[item.title]]
+                            <!-- <iron-icon on-click="showSubmenu" icon="icons:chevron-right"></iron-icon> -->
+                        </div>
+                        <!-- <iron-collapse id="collapse" opened> -->
+                        <template is="dom-repeat" items="[[item.submenu]]">
+                            <a name$="view[[num]][[index]]" href="[[rootPath]][[item.path]]">
+                                <iron-icon icon="icons:description"></iron-icon>
+                                &nbsp;&nbsp;[[item.name]]
+                            </a>
+                        </template>
+                        <!-- </iron-collapse> -->
+                        <div class="line"></div>
+                    </template>
                     <a name="setting" href="[[rootPath]]">
                         <iron-icon icon="icons:settings"></iron-icon>
                         &nbsp;&nbsp;ตั้งค่า
@@ -112,22 +117,6 @@
                     </a>
                 </iron-selector>
             </div>
-            <!-- <div class="line"></div> -->
-
-            <!-- <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-                <a name="dashboard" href="[[rootPath]]">
-                    <iron-icon icon="icons:dashboard"></iron-icon>
-                    &nbsp;&nbsp;Dashboard
-                </a>
-                <a name="profile" href="[[rootPath]]profile">
-                    <iron-icon icon="social:person"></iron-icon>
-                    &nbsp;&nbsp;Profile
-                </a>
-                <a name="view3" href="[[rootPath]]view3">
-                    <iron-icon icon="icons:exit-to-app"></iron-icon>
-                    &nbsp;&nbsp;Sign out
-                </a>
-            </iron-selector> -->
         </app-drawer>
 
 
@@ -150,11 +139,19 @@
                         type: Object,
                         statePath: 'auth.user'
                     },
+                    menu: {
+                        type: Array,
+                        statePath: 'layout.menu'
+                    },
                     rootPath: String
                 };
             }
-            ready(){
+            ready() {
                 super.ready()
+            }
+            showSubmenu(e) {
+                console.log(e.target)
+                // this.$.collapse.toggle()
             }
             toggle() {
                 this.$.drawer.toggle()
@@ -165,7 +162,7 @@
             close() {
                 this.$.drawer.close()
             }
-            signOut(){
+            signOut() {
                 localStorage.removeItem('user');
                 window.location.reload()
             }

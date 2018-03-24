@@ -3,6 +3,7 @@
 <link rel="import" href="./redux/reducers/auth-reducer.html">
 <link rel="import" href="./redux/reducers/blog-reducer.html">
 <link rel="import" href="./redux/reducers/category-reducer.html">
+<link rel="import" href="./redux/reducers/layout-reducer.html">
 <script src="../node_modules/redux/dist/redux.js"></script>
 <script>
     // Setup a Redux store
@@ -10,7 +11,8 @@
         common : commonReducer,
         auth : authReducer,
         blog : blogReducer,
-        category : categoryReducer
+        category : categoryReducer,
+        layout : layoutReducer
     })
     
     const store = Redux.createStore(rootReducer,
