@@ -1,0 +1,33 @@
+<script>
+    class technicAction {
+
+        getTags() {
+            return axios.get('./technician/tags?pageNo=1&size=20')
+        }
+        getTypes() {
+            return axios.get('./technician/types?pageNo=1&size=20')
+        }
+        selectTags(id) {
+            return axios.get('./technician/tags/by?id='+id)
+        }
+        addTags(val){
+            return axios.post('./technician/tags/create',val)
+        }
+        editTags(val){
+            return axios.put('./technician/tags/update',val)
+        }
+        deleteTags(id){
+            return axios.delete('./technician/tags/delete?id='+id)
+        }
+        assignUser(form, user) {
+            var form = form;
+            var newUser = {
+                user_create_id: user.id,
+                user_update_id: user.id
+            }
+            var newForm = Object.assign(form, newUser);
+            return newForm
+        }
+    }
+    const technic = new technicAction()
+</script>

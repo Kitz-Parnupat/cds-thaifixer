@@ -28,17 +28,11 @@
                 <template>[[item.blog_title]]</template>
             </vaadin-grid-column>
 
-            <!-- <vaadin-grid-column>
-                <template class="header">วันที่โพส</template>
-                <template>[[item.created_at]]</template>
-            </vaadin-grid-column> -->
-
             <vaadin-grid-column width="150px" flex-grow="0">
                 <template class="header">จัดการ</template>
                 <template>
                     <paper-icon-button on-tap="editBlog" icon="create"></paper-icon-button>
                     <paper-icon-button on-tap="deleteBlog" icon="delete"></paper-icon-button>
-                    <!-- <p style="white-space: normal">[[item.address.street]], [[item.address.city]]</p> -->
                 </template>
             </vaadin-grid-column>
 

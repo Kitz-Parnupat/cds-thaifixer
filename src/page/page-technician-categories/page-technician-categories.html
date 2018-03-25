@@ -1,0 +1,36 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../redux-mixin.html">
+<link rel="import" href="../../actions/teachnicAction.html">
+<link rel="import" href="./compoents/teachnician-categories-list.html">
+<link rel="import" href="../../shared-styles.html">
+<dom-module id="page-technician-categories">
+    <template>
+        <style include="shared-styles"></style>
+        <div class="container">
+            <div class="title">
+                ประเภทช่าง
+            </div>
+            <div class="content">
+                <teachnician-categories-list></teachnician-categories-list>
+            </div>
+        </div>
+    </template>
+
+    <script>
+       
+        class PageTeachnicianCategories extends ReduxMixin(Polymer.Element) {
+          
+            static get is() {
+                return 'page-technician-categories';
+            }
+
+            ready(){
+                super.ready()
+
+            }
+
+        }
+
+        window.customElements.define(PageTeachnicianCategories.is, PageTeachnicianCategories);
+    </script>
+</dom-module>

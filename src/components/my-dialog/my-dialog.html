@@ -1,24 +1,89 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../shared-styles.html">
 <dom-module id="my-dialog">
     <template>
         <style include="shared-styles">
-           
+            h2 {
+                margin-bottom: 0;
+            }
+
+            paper-dialog {
+                width: 450px;
+                border-radius: 4px;
+            }
         </style>
+        <paper-dialog id="dialog" modal>
+            <h2>จัดการข้อมูล</h2>
+            <div id="form">
+                <slot></slot>
+                <!-- <template is="dom-repeat" items="[[field]]">
+                    <paper-input label="ชื่อ" id="[[item.path]]" value="[[combineValue(item,data)]]" always-float-label></paper-input>
+                </template> -->
+            </div>
+            <div class="buttons">
+                <paper-button dialog-dismiss>ยกเลิก</paper-button>
+                <paper-button class="btn-primary" on-click="getForm">บันทึก</paper-button>
+            </div>
+        </paper-dialog>
     </template>
 
     <script>
-       
         class myDialog extends Polymer.Element {
-            
+
             static get is() {
                 return 'my-dialog';
             }
 
             static get properties() {
                 return {
-                    
+                    field: {
+                        type: Array,
+                        value: [{
+                            label: 'ชื่อ',
+                            path: 'name'
+                        }]
+                    },
+                    data: {
+                        type: Object,
+                        value: {
+                            // name: 'งานออกแบบ/สถาปนิก/วิศวกร'
+                        }
+                    }
                 };
+            }
+            combineValue(field, val) {
+                if (field.path) {
+                    var path = field.path;
+                    return val[path]
+                }
+            }
+            open() {
+                this.$.dialog.open()
+            }
+            close() {
+                this.$.dialog.close()
+            }
+            getForm() {
+                // console.log(this.children)
+                var elForm = this.children;
+                var form = {}
+                for (let index = 0; index < elForm.length; index++) {
+                    // console.log(elForm[index].value)
+                    if (elForm[index].getAttribute('id')) {
+                        var key = elForm[index].id;
+                        var value = elForm[index].value
+                        if(elForm[index].getAttribute('id') == 'status'){
+                            value = elForm[index].checked
+                        }
+                        form[key] = value;
+                    }
+                }
+                this.dispatchEvent(new CustomEvent('add', {
+                    detail: form
+                }));
             }
         }
 

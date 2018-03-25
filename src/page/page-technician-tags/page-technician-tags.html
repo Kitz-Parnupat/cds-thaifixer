@@ -1,0 +1,177 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/vaadin-combo-box/vaadin-combo-box.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../../bower_components/paper-checkbox/paper-checkbox.html">
+
+<link rel="import" href="../../shared-styles.html">
+<link rel="import" href="../../components/my-table/my-table.html">
+<link rel="import" href="../../actions/teachnicAction.html">
+<link rel="import" href="../../redux-mixin.html">
+<link rel="import" href="../../components/my-dialog/my-dialog.html">
+
+<dom-module id="page-technician-tags">
+    <template>
+        <style include="shared-styles"></style>
+        <div class="container">
+            <div class="title">
+                บริการช่าง
+            </div>
+            <div class="content">
+                <paper-button class="btn-primary btn-md" on-click="clearForm" raised>เพิ่ม</paper-button>
+                <div style="margin:1rem"></div>
+                <my-table collum="[[collum]]" row="[[data]]" on-edit="editForm" on-delete="confirmDailog"></my-table>
+            </div>
+            <my-dialog id="dialog" field="[[collum]]" on-add="postTags">
+                <vaadin-combo-box label="เลือกประเภท" id="technician_type_id" items="[[types]]" item-label-path="technician_type_name" item-value-path="id"
+                    placeholder="เลือกหมวดหมู่" value="{{form.technician_type_id}}">
+                    <template>
+                        {{item.technician_type_name}}
+                    </template>
+                </vaadin-combo-box>
+                <paper-input label="งานบริการ" id="technician_tag_name" value="{{form.technician_tag_name}}" always-float-label></paper-input>
+                <paper-textarea label="คำอธิบาย" id="technician_tag_description" value="{{form.technician_tag_description}}" always-float-label></paper-textarea>
+                <paper-checkbox id="status" checked="{{form.status}}">เปิดการใช้งาน</paper-checkbox>
+                <div>Message : [[message]]</div>
+            </my-dialog>
+        </div>
+    </template>
+
+    <script>
+        class PageTeachnicianTags extends ReduxMixin(Polymer.Element) {
+
+            static get is() {
+                return 'page-technician-tags';
+            }
+            static get properties() {
+                return {
+                    collum: {
+                        type: Array,
+                        value: [{
+                                label: 'ชือ',
+                                path: 'technician_tag_name'
+                            },
+                            {
+                                label: 'สถานะ',
+                                path: 'status'
+                            }
+                        ]
+                    },
+                    data: {
+                        type: Array,
+                        statePath: 'teachnic.tags'
+                    },
+                    types: {
+                        type: Array,
+                        statePath: 'teachnic.types'
+                    },
+                    form: {
+                        type: Object,
+                        statePath: 'teachnic.select'
+                    },
+                    user: {
+                        type: Object,
+                        statePath: 'auth.user'
+                    },
+                    message: {
+                        type: String,
+                        value: ''
+                    }
+                }
+            }
+            ready() {
+                super.ready();
+                this.getTags();
+                this.getTypes();
+            }
+            getTags() {
+                technic.getTags()
+                    .then((res) => this.dispatch({
+                        type: 'TECHNIC_GET_TAGS',
+                        payload: res.data.data
+                    }))
+            }
+
+            getTypes() {
+                technic.getTypes()
+                    .then((res) => this.dispatch({
+                        type: 'TECHNIC_GET_TYPES',
+                        payload: res.data.data
+                    }))
+            }
+            postTags(e) {
+                this.message = 'กำลังโหลด';
+                if (!this.form.id) {
+                    let form = technic.assignUser(this.form, this.user)
+                    technic.addTags(form)
+                        .then((res) => {
+                            this.message = 'บันทึกสำเร็จ!'
+                        })
+                        .then((res) => this.dispatch({
+                            type: 'TECHNIC_CLEAR_SELECT',
+                            payload: {}
+                        }))
+                        .then((res) => this.getTags())
+                } else {
+                    // console.log('ss')
+                    let form = technic.assignUser(this.form, this.user)
+                    technic.editTags(form)
+                        .then((res) => {
+                            this.message = 'บันทึกสำเร็จ!'
+                        })
+                        .then((res) => this.dispatch({
+                            type: 'TECHNIC_CLEAR_SELECT',
+                            payload: {}
+                        }))
+                        .then((res) => this.getTags())
+                        .then((res) => this.closeDialog())
+                }
+
+            }
+
+            editForm(e) {
+                technic.selectTags(e.detail.id)
+                    .then((res) => this.dispatch({
+                        type: 'TECHNIC_CLEAR_SELECT',
+                        payload: res.data.data
+                    }))
+                    .then((res) => this.openDialog())
+            }
+
+            clearForm() {
+                this.dispatch({
+                    type: 'TECHNIC_CLEAR_SELECT',
+                    payload: {}
+                })
+                this.openDialog()
+            }
+
+            confirmDailog(e) {
+                swal({
+                        title: "อยากลบบทความใช้ไหม ?",
+                        text: "หากลบบทความแล้วจะไม่สามารถกู้คืนได้",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((res) => {
+                        if (res) {
+                            technic.deleteTags(e.detail.id)
+                                .then((res) => this.getTags())
+                        }
+                    })
+            }
+
+            openDialog() {
+                this.$.dialog.open()
+            }
+            closeDialog() {
+                this.$.dialog.close()
+            }
+
+        }
+
+        window.customElements.define(PageTeachnicianTags.is, PageTeachnicianTags);
+    </script>
+</dom-module>

@@ -1,0 +1,32 @@
+<script>
+    const teachnicReducer = (function () {
+        const initial = {
+            types: [],
+            tags: [],
+            select: {}
+        }
+        const reducer = function (state = initial, action) {
+            switch (action.type) {
+                case 'TECHNIC_GET_TAGS':
+                    return Object.assign({}, state, {
+                        tags: action.payload
+                    })
+                case 'TECHNIC_GET_TYPES':
+                    return Object.assign({}, state, {
+                        types: action.payload
+                    })
+                case 'TECHNIC_SELECT':
+                    return Object.assign({}, state, {
+                        select: action.payload
+                    })
+                case 'TECHNIC_CLEAR_SELECT':
+                    return Object.assign({}, state, {
+                        select: action.payload
+                    })
+                default:
+                    return state
+            }
+        };
+        return reducer
+    })()
+</script>

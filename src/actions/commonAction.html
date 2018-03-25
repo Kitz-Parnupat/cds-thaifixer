@@ -1,11 +1,19 @@
-
 <script>
-    class commonAction{
-        setData(val){
-           this.id = val;
+    class commonAction {
+        setData(val) {
+            this.id = val;
         }
-        getData(){
-            return axios.get('./food/group/list/?restaurant_branch_id='+this.id)
+        getData() {
+            return axios.get('./food/group/list/?restaurant_branch_id=' + this.id)
+        }
+        alertSuccess() {
+            swal({
+                title: "บันทึกสำเร็จ",
+                text: "แก้ไขบทความแล้ว",
+                icon: "success",
+                buttons: false,
+                timer: 3000
+            })
         }
     }
     const common = new commonAction()

@@ -4,6 +4,7 @@
 <link rel="import" href="./redux/reducers/blog-reducer.html">
 <link rel="import" href="./redux/reducers/category-reducer.html">
 <link rel="import" href="./redux/reducers/layout-reducer.html">
+<link rel="import" href="./redux/reducers/teachnic-reducer.html">
 <script src="../node_modules/redux/dist/redux.js"></script>
 <script>
     // Setup a Redux store
@@ -12,7 +13,8 @@
         auth : authReducer,
         blog : blogReducer,
         category : categoryReducer,
-        layout : layoutReducer
+        layout : layoutReducer,
+        teachnic : teachnicReducer
     })
     
     const store = Redux.createStore(rootReducer,

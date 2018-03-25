@@ -1,0 +1,102 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<dom-module id="my-table">
+    <template>
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                text-align: left;
+                background-color: white;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+                transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+            }
+
+            th,
+            td {
+                border-bottom: 1px solid #ddd;
+            }
+            th{
+                padding: 1rem 0.5rem;
+            }
+            td{
+                padding: 0.5rem;
+            }
+        </style>
+        <table>
+            <tr>
+                <th style="width:20px">#</th>
+                <template is="dom-repeat" items="[[collum]]">
+                    <th>[[item.label]]</th>
+                </template>
+                <th style="width:100px">เครื่องมือ</th>
+            </tr>
+            <template is="dom-repeat" items="[[row]]">
+                <tr>
+                    <td style="width:20px">[[cont(index)]]</td>
+                    <template is="dom-repeat" items="[[collum]]" as="col">
+                        <td>[[combineData(item,col)]]</td>
+                    </template>
+                    <td>
+                        <paper-icon-button on-click="editData" icon="create"></paper-icon-button>
+                        <paper-icon-button on-click="deleteData" icon="delete"></paper-icon-button>
+                    </td>
+                </tr>
+            </template>
+        </table>
+    </template>
+
+    <script>
+        class MyTable extends Polymer.Element {
+
+            static get is() {
+                return 'my-table';
+            }
+
+            static get properties() {
+                return {
+                    collum: {
+                        type: Array,
+                        value: [{
+                                label: 'Firstname',
+                                path: 'fname'
+                            },
+                            {
+                                label: 'Lastname',
+                                path: 'lname'
+                            },
+                            {
+                                label: 'Savings',
+                                path: 'saving'
+                            }
+                        ]
+                    },
+                    row: {
+                        type: Array,
+                        value: [{
+                            fname: 'Peter',
+                            lname: 'Griffin',
+                            saving: '$100'
+                        }]
+                    }
+                }
+            }
+            cont(val){
+                return val+1
+            }
+            combineData(item, col) {
+                var path = col.path
+                return item[path]
+            }
+            editData(e){
+                this.dispatchEvent(new CustomEvent('edit', {detail: e.model.item}));
+            }
+            deleteData(e){
+                this.dispatchEvent(new CustomEvent('delete', {detail: e.model.item}));
+            }
+        }
+
+        window.customElements.define(MyTable.is, MyTable);
+    </script>
+</dom-module>
