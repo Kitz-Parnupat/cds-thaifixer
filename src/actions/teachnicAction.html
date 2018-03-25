@@ -7,18 +7,35 @@
         getTypes() {
             return axios.get('./technician/types?pageNo=1&size=20')
         }
+
         selectTags(id) {
             return axios.get('./technician/tags/by?id='+id)
         }
+        selectTypes(id){
+            return axios.get('./technician/types/by?id='+id)
+        }
+
         addTags(val){
             return axios.post('./technician/tags/create',val)
         }
+        addTypes(val){
+            return axios.post('./technician/types/create',val)
+        }
+
         editTags(val){
             return axios.put('./technician/tags/update',val)
         }
+        editTypes(val){
+            return axios.put('./technician/types/update',val)
+        }
+
         deleteTags(id){
             return axios.delete('./technician/tags/delete?id='+id)
         }
+        deleteTypes(id){
+            return axios.delete('./technician/types/delete?id='+id)
+        }
+
         assignUser(form, user) {
             var form = form;
             var newUser = {
